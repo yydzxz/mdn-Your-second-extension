@@ -15,6 +15,7 @@
      * that image, then insert the node into the document.
      */
     function insertBeast(beastURL) {
+        console.log('sss');
         removeExistingBeasts();
         let beastImage = document.createElement("img");
         beastImage.setAttribute("src", beastURL);

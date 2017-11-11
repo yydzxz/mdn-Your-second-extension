@@ -12,7 +12,6 @@ const hidePage = `body > :not(.beastify-image) {
  */
 function listenForClicks() {
     document.addEventListener("click", (e) => {
-
         /**
          * Given the name of a beast, get the URL to the corresponding image.
          */

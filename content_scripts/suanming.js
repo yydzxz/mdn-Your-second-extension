@@ -25,23 +25,49 @@
 
 
     function suanming(suanmingURL){
-        let suanmingDIV = document.createElement("div");
-        suanmingDIV.setAttribute("id", 'myDiv');
-        suanmingDIV.style.height = "200px";
-        suanmingDIV.style.width = "200px";
-        suanmingDIV.style.background='black';
-        suanmingDIV.style.position = 'absolute';//绝对位置
-        suanmingDIV.style.display='inline';
-        suanmingDIV.style.zIndex = 9999;
-        suanmingDIV.className = "beastify-image";
-        document.body.appendChild(suanmingDIV);
+        // let suanmingDIV = document.createElement("div");
+        // suanmingDIV.setAttribute("id", 'myDiv');
+        // suanmingDIV.style.height = "200px";
+        // suanmingDIV.style.width = "200px";
+        // suanmingDIV.style.background='black';
+        // suanmingDIV.style.position = 'absolute';//绝对位置
+        // suanmingDIV.style.display='inline';
+        // suanmingDIV.style.zIndex = 9999;
+        // suanmingDIV.className = "beastify-image";
+        // document.body.appendChild(suanmingDIV);
+        // setInterval(()=>{
+        //     console.log(document.body.clientWidth);
+        //     let x = (Math.random() * document.body.clientWidth)+'px';
+        //     let y = Math.random() * (document.body.clientHeight)+'px';
+        //     $('#myDiv').css({ 'left': x, 'top': y});
+        // },1000)
+        
+        removeCheZhan();
+        autoRoomChatSend();
+    }
+
+
+    function autoRoomChatSend(){
+        let count=0;
+        let data=[
+            '666666666',
+            '这个游戏叫什么名字？',
+            '这个游戏需要激活码吗？',
+            '这个游戏在哪下载',
+            '队友都是谁啊'
+        ]
+        console.log('autoRoomChatSend')
         setInterval(()=>{
-            console.log(document.body.clientWidth);
-            let x = (Math.random() * document.body.clientWidth)+'px';
-            let y = Math.random() * (document.body.clientHeight)+'px';
-            alert(x+','+y);
-            $('#myDiv').css({ 'left': x, 'top': y});
-        },1000)
+            console.log(data[count]);
+            $('.room-chat-texta').val(data[count]);
+            $('.room-chat-send').trigger("click"); 
+            if(count>4){
+                count=0;
+            }else{
+                count++;
+            }
+        },15000)
+        
     }
     
 
@@ -52,6 +78,15 @@
         let existingBeasts = document.querySelectorAll(".beastify-image");
         for (let beast of existingBeasts) {
             beast.remove();
+        }
+    }
+
+
+    function removeCheZhan(){
+        console.log('removeCheZhan');
+        let chezhan = document.querySelectorAll(".tab");
+        for (let temp of chezhan) {
+            temp.remove();
         }
     }
 
