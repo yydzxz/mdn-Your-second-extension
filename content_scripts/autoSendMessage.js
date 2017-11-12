@@ -10,20 +10,45 @@
     }
     window.hasRun = true;
 
-    function autoRoomChatSend(data2){
+    //正则匹配熊猫发言间隔
+    const regex=/\[(\d)秒\]/;//[2秒]
+
+    var timer;
+
+    function autoRoomChatSend(message){
+        $('.room-chat-texta').val('666666');
+        $('.room-chat-send').trigger("click"); 
+        // console.log('熊猫发言间隔1：'+$('.room-chat-send').val())
+        console.log('熊猫发言间隔2：'+document.querySelector('.room-chat-send').innerHTML)
+        // console.log('熊猫发言间隔3：'+document.querySelector('.room-chat-send').value)
+        let matchResults=document.querySelector('.room-chat-send').innerHTML.match(regex); 
+        console.log('匹配结果：'+matchResults);//匹配结果：[2秒],2
+        let xiongmaoInterval=1;
+        if(matchResults.length>0){
+            xiongmaoInterval=parseInt(matchResults[1])+1;//虽然获取的间隔时间是2秒，但是实际的间隔时间是2+1秒
+            console.log('正则匹配后的间隔时间：'+xiongmaoInterval);
+        }
         console.log('autoRoomChatSend')
         let count=0;
-        let data=data2;
-        setInterval(()=>{
+        let data=message.data;
+        timer=setInterval(()=>{
             if(count>=data.length){
                 count=0;
             }
             console.log('发送弹幕'+data[count]);
             $('.room-chat-texta').val(data[count++]);
             $('.room-chat-send').trigger("click");  
-        },15000)
-        
+        },xiongmaoInterval*1000)
     }
+
+    /**
+     * 取消发送弹幕的定时器
+     */
+    function cancelTimer(){
+        clearInterval(timer);
+        console.log('cancelTimer');
+    }
+
 
     function removeCheZhan(){
         console.log('removeCheZhan');
@@ -44,7 +69,10 @@
     browser.runtime.onMessage.addListener((message) => {
         console.log(message);
         if (message.command == "autoSendMessage") {
-            autoRoomChatSend(message.data);
+            autoRoomChatSend(message);
+           
+        }else if(message.command == "stop"){
+            cancelTimer();
         }else{
             console.log(message);
             reportError(message);

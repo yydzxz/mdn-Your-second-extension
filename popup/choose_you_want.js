@@ -4,16 +4,17 @@
  */
 
 function listenForClicks() {
-    document.addEventListener("click", (e) => {
+    document.getElementById("send").addEventListener("click", (e) => {
 
         function startSendMessage(tabs) {
-            let messages = e.target.textContent;
-            let data = messages.split(' ');
+            let messages = document.getElementById("message").value;
+            let data = messages.split(';');
             browser.tabs.sendMessage(tabs[0].id, {
                 command: "autoSendMessage",
-                data: data
+                data: data,
             });
         }
+
 
         /**
          * Just log the error to the console.
@@ -26,16 +27,34 @@ function listenForClicks() {
          * Get the active tab,
          * then call "beastify()" or "reset()" as appropriate.
          */
-        if (e.target.classList.contains("message")) {
+        if (e.target.classList.contains("send")) {
             browser.tabs.query({ active: true, currentWindow: true })
                 .then(startSendMessage)
                 .catch(reportError);
-        } else {
-            browser.tabs.query({ active: true, currentWindow: true })
-            .then(startSendMessage)
-            .catch(reportError);
+        }else{
+            console.log(e.target.classList);
         }
     });
+    document.getElementById("stop").addEventListener("click", (e) => {
+        function stopSendMessage(tabs) {
+            browser.tabs.sendMessage(tabs[0].id, {
+                command: "stop",
+            });
+        }
+        /**
+         * Just log the error to the console.
+         */
+        function reportError(error) {
+            console.error(`Could not beastify: ${error}`);
+        }
+        if (e.target.classList.contains("stop")) {
+            browser.tabs.query({ active: true, currentWindow: true })
+                .then(stopSendMessage)
+                .catch(reportError);
+        }else{
+            console.log(e.target.classList);
+        }
+    })
 }
 
 /**

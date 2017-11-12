@@ -1,5 +1,9 @@
 html, body {
-    width: 100px;
+    width: 200px;
+    align-content:center
+  }
+  .popup-content{
+    width:200px
   }
   
   .hidden {
@@ -13,13 +17,21 @@ html, body {
     font-size: 1.5em;
     cursor: pointer;
   }
-  
+  .send{
+    background-color:#EE30A7; 
+  }
+  .stop{
+    background-color:#912CEE; 
+  }
   .beast:hover {
     background-color: #CFF2F2;
+    width:80%;
   }
   
-  .beast {
+  .message {
     background-color: #E5F2F2;
+    width:100%;
+    
   }
   
   .reset {
